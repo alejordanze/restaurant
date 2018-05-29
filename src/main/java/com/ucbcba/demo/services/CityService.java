@@ -1,6 +1,9 @@
 package com.ucbcba.demo.services;
 
 import com.ucbcba.demo.entities.City;
+import com.ucbcba.demo.entities.Country;
+
+import java.util.List;
 
 public interface CityService {
 
@@ -11,5 +14,6 @@ public interface CityService {
     City getCity(Integer id);
 
     void deleteCity(Integer id);
+
 
 }

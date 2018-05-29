@@ -1,8 +1,10 @@
-package com.ucbcba.demo.controllers;
+package com.ucbcba.demo.Controllers;
 
 import com.ucbcba.demo.entities.Category;
+import com.ucbcba.demo.entities.Country;
 import com.ucbcba.demo.entities.Restaurant;
 import com.ucbcba.demo.services.CityService;
+import com.ucbcba.demo.services.CountryService;
 import com.ucbcba.demo.services.RestaurantService;
 import com.ucbcba.demo.services.UserService;
 import org.springframework.security.core.Authentication;
@@ -23,11 +25,13 @@ public class HomeController {
     private final UserService userService;
     private final RestaurantService restaurantService;
     private final CityService cityService;
+    private final CountryService countryService;
 
-    public HomeController(UserService userService, RestaurantService restaurantService, CityService cityService) {
+    public HomeController(UserService userService, RestaurantService restaurantService, CityService cityService, CountryService countryService) {
         this.userService = userService;
         this.restaurantService = restaurantService;
         this.cityService = cityService;
+        this.countryService = countryService;
     }
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
@@ -40,6 +44,7 @@ public class HomeController {
         model.addAttribute("logged", logged);
         model.addAttribute("cities", cityService.listAllCities());
         model.addAttribute("restaurants", restaurantService.listAllRestaurants());
+        model.addAttribute("countries", countryService.listAllCountries());
         return "home";
     }
 
@@ -63,6 +68,7 @@ public class HomeController {
         model.addAttribute("logged", logged);
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("cities", cityService.listAllCities());
+        model.addAttribute("countries", countryService.listAllCountries());
         return "home";
     }
 

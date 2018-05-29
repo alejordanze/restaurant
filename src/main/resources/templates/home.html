@@ -241,6 +241,13 @@
                     <option th:each="city : ${cities}" th:value="${city.name}" th:text="${city.name}"></option>
                 </select>
             </li>
+
+            <li>
+                <select class="btn btn-default" id="countryDropdown" onchange="filterDataTable2()">
+                    <option value="All countries">All countries</option>
+                    <option th:each="country : ${countries}" th:value="${country.name}" th:text="${country.name}"></option>
+                </select>
+            </li>
         </ul>
     </div>
     <div id="block1">
@@ -255,6 +262,9 @@
                 <th>
                     City
                 </th>
+                <th>
+                    Country
+                </th>
             </tr>
 
             <tr th:each="restaurant : ${restaurants}">
@@ -264,19 +274,51 @@
                 </td>
                 <td th:text="${restaurant.getCity().name}">
                 </td>
+                <td th:text="${restaurant.getCity().getCountry().name}">
+                </td>
             </tr>
         </table>
         <script>
             function filterDataTable() {
-                var input, filter, table, tr, td;
+                var input, filter, table, tr, td, input2, td2, filter2;
                 input = document.getElementById("cityDropdown");
+                input2 = document.getElementById("cityDropdown");
                 filter = input.options[input.selectedIndex].value.toUpperCase();
+                filter2 = input.options[input2.selectedIndex].value.toUpperCase();
                 table = document.getElementById("dataTable");
                 tr = table.getElementsByTagName("tr");
                 /*<![CDATA[*/
                 for (var i = 0; i < tr.length; i++) {
                     td = tr[i].getElementsByTagName("td")[2];
-                    if (!(filter === "ALL CITIES")) {
+                    td2 = tr[i].getElementsByTagName("td")[3];
+
+                    if (!(filter === "ALL CITIES") || !(filter2==="ALL COUNTRIES")) {
+                        if (td || td2) {
+                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1 || td2.innerHTML.toUpperCase().indexOf(filter2) > -1 ) {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+                    else {
+                        if (td || td2) {
+                            tr[i].style.display = "";
+                        }
+                    }
+                    /*]]>*/
+                }
+            }
+            function filterDataTable2() {
+                var input, filter, table, tr, td;
+                input = document.getElementById("countryDropdown");
+                filter = input.options[input.selectedIndex].value.toUpperCase();
+                table = document.getElementById("dataTable");
+                tr = table.getElementsByTagName("tr");
+                /*<![CDATA[*/
+                for (var i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (!(filter === "ALL COUNTRIES")) {
                         if (td) {
                             if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                                 tr[i].style.display = "";

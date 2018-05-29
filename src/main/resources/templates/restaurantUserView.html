@@ -52,7 +52,8 @@
 
         <div class="col-lg-6">
             <h4 class="bold">City: </h4>
-            <p class="lead" th:text="${restaurant.city.name}"></p>
+            <label class="lead" th:text="${restaurant.city.name} + ', '"> </label><label class="lead" th:text="${restaurant.city.country.name}"></label>
+
         </div>
     </div>
 

@@ -33,4 +33,6 @@ public class CityServiceImpl implements CityService {
     public void deleteCity(Integer id) {
         this.cityRepository.delete(id);
     }
+
+
 }

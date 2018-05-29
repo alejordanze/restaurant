@@ -38,16 +38,8 @@ public class CommentController {
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     String save(Model model, @Valid @ModelAttribute Comment comment, BindingResult bindingResult) {
         model.addAttribute("comment",comment);
-        User userExists = null;
-        User user = comment.getUser();
-        List<Comment> comments=restaurantService.listAllComments(comment.getRestaurant().getId());
-        for(int i=0;i<comments.size();i++){
-            if(user.getUsername() == comments.get(i).getUser().getUsername()){
-                System.out.println(comments.get(i).getUser().getUsername());
-                userExists=user;
-            }
-        }
-        if(userExists!= null) {
+        boolean userExists = restaurantService.alreadyCommented(comment.getUser().getId(),comment.getRestaurant().getId());
+        if(userExists) {
             return "redirect:/restaurant/" + comment.getRestaurant().getId();
         }
         commentService.saveComment(comment);
